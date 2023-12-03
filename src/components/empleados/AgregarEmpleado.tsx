@@ -1,11 +1,13 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { type INewEmpleado, type Empleado } from '../../types/types'
 
 const AgregarEmpleado = () => {
-    const [nuevoEmpleado, setNuevoEmpleado] = useState({
+    let navigation = useNavigate()
+    const [nuevoEmpleado, setNuevoEmpleado] = useState<Empleado>({
         nombre:'',
         departamento:'',
-        sueldo:''
+        sueldo:0
     })
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void =>{
         setNuevoEmpleado({
@@ -13,27 +15,30 @@ const AgregarEmpleado = () => {
             [event.target.name]:event.target.value
         })
     }
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): void => {
-        event.preventDefault()
-        const agregarEmpleado = (newEmp): void =>{
-            try{
-                fetch('http://localhost:8080/sistemarh-app/empleados', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(newEmp),
-                    })
-            }catch(error){
-                console.log(error)
-            }finally{
-                setNuevoEmpleado({
-                    nombre:'',
-                    departamento:'',
-                    sueldo:''
+    const agregarEmpleado = ( nuevoEmpleado: Empleado): void =>{
+        try{
+            fetch('http://localhost:8080/sistemarh-app/empleados', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(nuevoEmpleado),
                 })
-            }
+        }catch(error){
+            console.log(error)
+        }finally{
+            setNuevoEmpleado({
+                nombre:'',
+                departamento:'',
+                sueldo: 0
+            })
+            setTimeout(() => {
+                navigation('/')
+            }, 500);
         }
+    }
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
         agregarEmpleado(nuevoEmpleado)
     }
   return (
@@ -80,13 +85,13 @@ const AgregarEmpleado = () => {
                 name='sueldo'
                 id="sueldo"/>
         </div>
-        <div className='mb-3'>
+        <div className='mb-3 d-flex justify-content-between mt-5'>
             <button 
                 type="submit" 
-                className="btn btn-primary float-start">Agregar Empleado</button>
+                className="btn btn-primary fw-bold">Agregar Empleado</button>
             <button 
                 type="button" 
-                className="btn btn-warning float-end">
+                className="btn btn-warning">
                     <Link to='/' className='active'>Regresar</Link>
             </button>
         </div>

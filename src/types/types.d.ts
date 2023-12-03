@@ -1,5 +1,10 @@
 export interface Empleado {
-    idEmpleado: number
+    idEmpleado?: number
+    nombre: string
+    departamento: string
+    sueldo: number
+}
+export interface INewEmpleado {
     nombre: string
     departamento: string
     sueldo: number

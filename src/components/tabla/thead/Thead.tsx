@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Thead = ({keys}:[]) => {
+const Thead = ({ keys }: []) => {
   return (
     <thead className='table-dark'>
         <tr>
             {
-                keys.map(key => (
+                keys.map( key => (
                     <th 
                         key={key}
                         scope='col'>
@@ -13,6 +13,7 @@ const Thead = ({keys}:[]) => {
                     </th>
                 ))    
             }
+            <th></th>
         </tr>
     </thead>
   )
