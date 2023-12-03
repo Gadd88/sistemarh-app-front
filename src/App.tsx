@@ -1,10 +1,14 @@
+import ListadoEmpleados from "./components/empleados/ListadoEmpleados"
+import Navegacion from "./components/plantilla/Navegacion"
 
-function App() {
+const App = (): JSX.Element => {
 
   return (
-    <>
-      
-    </>
+    <div 
+      className='container text-center'>
+        <Navegacion />
+        <ListadoEmpleados />
+    </div>
   )
 }
 
